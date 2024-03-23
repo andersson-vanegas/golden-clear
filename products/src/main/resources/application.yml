@@ -1,0 +1,54 @@
+
+eureka:
+    client:
+        service-url:
+            default-zone: http://eureka:password@localhost:8761/eureka
+    instance:
+        instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+
+
+server:
+    port: 8084
+
+spring:
+    application:
+        name: productos
+    mvc:
+        pathmatch:
+            matching-strategy: ant-path-matcher
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        password: postgrest
+        url: jdbc:postgresql://localhost:5432/db_products
+        username: postgres
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+            show-sql: true
+
+
+logging:
+    level:
+        org.springframework.web.cors: DEBUG
+        root: info
+        org.springframework.cloud.gateway: trace
+        org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: info
+#        pattern:
+#            level: '%5p [${spring.application.name}, %X{traceId:-}, %X{spanId:-}]'
+
+
+
+
+springdoc:
+    api-docs:
+        enabled: true
+    swagger-ui:
+        enabled: true
+        path: /doc/swagger-ui.html
